@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pika_master/core/routing/routing.dart';
 import 'package:pika_master/core/theme/app_color_theme.dart';
 import 'package:pika_master/presentation/initial/initial_factory.dart';
 
@@ -15,6 +16,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
+      onGenerateRoute: Routing.generateRoute,
       theme: AppColorTheme.theme(context),
       home: InitialFactory.build(),
     );

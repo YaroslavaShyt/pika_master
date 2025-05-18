@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pika_master/core/theme/app_color_theme.dart';
 import 'package:pika_master/presentation/main/bloc/main_cubit.dart';
+import 'package:pika_master/presentation/widgets/buttons/main_outlined_button.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({
@@ -13,9 +15,14 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: OutlinedButton(
-          onPressed: cubit.logout,
-          child: Text("Logout"),
+        child: MainOutlinedButton(
+          onPressed: cubit.onStartRoundButtonTapped,
+          child: Text(
+            "Start round",
+            style: TextStyle(
+              color: getColorScheme(context).onSurface,
+            ),
+          ),
         ),
       ),
     );
