@@ -31,9 +31,7 @@ class ServiceLocator {
 
     sl.registerSingleton<IAuthService>(authService);
 
-    sl.registerSingleton<IUserService>(
-      UserService(authService: authService),
-    );
+    sl.registerSingleton<IUserService>(UserService(authService: authService));
   }
 
   void _initHandlers() {}

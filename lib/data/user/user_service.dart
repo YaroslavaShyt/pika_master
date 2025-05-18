@@ -15,7 +15,13 @@ class UserService implements IUserService {
   IAppUser? _appUser;
 
   final StreamController<UserState> _userStateStreamController =
-      StreamController();
+      StreamController.broadcast();
+
+  @override
+  void init() {
+    userStateStream();
+    _authService.checkAuth();
+  }
 
   @override
   Stream<UserState> userStateStream() {

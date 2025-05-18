@@ -13,13 +13,13 @@ class AuthRepository implements IAuthRepository {
   }) : _firebaseAuth = firebaseAuth;
 
   final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Future<IAppUser?> loginGoogle() async {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
       final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+          await _googleSignIn.signIn();
 
       if (googleSignInAccount == null) return null;
 
@@ -54,9 +54,25 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
+  IAppUser? get appUser {
+    final User? user = _firebaseAuth.currentUser;
+    if (user == null || user.displayName == null) {
+      return null;
+    }
+
+    return AppUser(
+      id: user.uid,
+      name: user.displayName ?? '',
+      email: user.email,
+      profilePhoto: user.photoURL,
+    );
+  }
+
+  @override
   Future<bool> logout() async {
     try {
       await _firebaseAuth.signOut();
+      await _googleSignIn.signOut();
 
       return _firebaseAuth.currentUser == null;
     } catch (error) {

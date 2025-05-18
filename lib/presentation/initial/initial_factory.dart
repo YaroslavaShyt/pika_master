@@ -9,8 +9,8 @@ class InitialFactory {
   static Widget build() {
     return BlocProvider<InitialCubit>(
       create: (_) => InitialCubit(
-        userService: sl.get<IUserService>(),
-      ),
+        userService: sl.get<IUserService>()..init(),
+      )..init(),
       child: Builder(
         builder: (context) {
           return InitialScreen(

@@ -5,6 +5,8 @@ import 'package:pika_master/firebase_options.dart';
 import 'package:pika_master/presentation/main_app.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

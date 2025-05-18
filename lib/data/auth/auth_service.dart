@@ -13,10 +13,20 @@ class AuthService implements IAuthService {
   final IAuthRepository _authRepository;
 
   final StreamController<AuthState> _authStateStreamController =
-      StreamController();
+      StreamController.broadcast();
 
   @override
   Stream<AuthState> authStateStream() => _authStateStreamController.stream;
+
+  @override
+  void checkAuth() {
+    if (_authRepository.appUser == null) {
+      _authStateStreamController.add(AuthState.notAuthorized);
+      return;
+    }
+    _appUser = _authRepository.appUser;
+    _authStateStreamController.add(AuthState.authorized);
+  }
 
   @override
   IAppUser? get appUser => _appUser;
