@@ -10,8 +10,12 @@ class UserRepository implements IUserRepository {
   final INetworkClient _networkClient;
 
   @override
-  Future<IAppUser?> getUser({required String id}) {}
+  Future<IAppUser?> getUser({required String id}) {
+    throw UnimplementedError();
+  }
 
   @override
-  Future<void> deleteUser({required String id}) {}
+  Future<void> deleteUser({required String id}) {
+    throw UnimplementedError();
+  }
 }
