@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pika_master/presentation/auth/bloc/auth_cubit.dart';
+import 'package:pika_master/presentation/auth/bloc/auth_state.dart';
+import 'package:pika_master/presentation/auth/widgets/auth_button.dart';
+import 'package:pika_master/presentation/auth/widgets/poke_ball_animation_widget.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({
@@ -12,15 +16,41 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          OutlinedButton(
-            onPressed: cubit.onAuthButtonTapped,
-            child: Text("Authorization"),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              flex: 3,
+              child: Column(
+                children: [
+                  const PikachuAnimationWidget(),
+                  Text(
+                    "Who's that Pokemon?",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (_, state) {
+                final bool isLoading = state.status == AuthStatus.loading;
+
+                return Flexible(
+                  flex: 2,
+                  child: AuthButton(
+                    isLoading: isLoading,
+                    onTap: cubit.onAuthButtonTapped,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
