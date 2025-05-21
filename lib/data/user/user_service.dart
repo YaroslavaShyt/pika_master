@@ -3,14 +3,18 @@ import 'dart:async';
 import 'package:pika_master/core/logger/logger.dart';
 import 'package:pika_master/domain/auth/iauth_service.dart';
 import 'package:pika_master/domain/user/iapp_user.dart';
+import 'package:pika_master/domain/user/iuser_repository.dart';
 import 'package:pika_master/domain/user/iuser_service.dart';
 
 class UserService implements IUserService {
   UserService({
     required IAuthService authService,
-  }) : _authService = authService;
+    required IUserRepository userRepository,
+  })  : _authService = authService,
+        _userRepository = userRepository;
 
   final IAuthService _authService;
+  final IUserRepository _userRepository;
 
   IAppUser? _appUser;
 
@@ -39,10 +43,17 @@ class UserService implements IUserService {
 
   Future<void> _onUserAuthorized() async {
     try {
-      _appUser = _authService.appUser;
+      final String? userEmail = _authService.appUser?.email;
+
+      if (userEmail == null) return;
+
+      _appUser = await _userRepository.getUser(email: userEmail);
+
       if (_appUser == null) return;
 
-      _userStateStreamController.add(UserState.initialized);
+      _userStateStreamController.add(
+        UserState.initialized,
+      );
     } catch (error) {
       logger.e(error);
     }

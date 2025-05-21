@@ -6,18 +6,17 @@ import 'package:pika_master/domain/networking/inetwirking_client_configuration.d
 import 'package:pika_master/domain/networking/inetworking_client.dart';
 
 class DioNetworkClient implements INetworkClient {
-  late final Dio _dio;
-
-  @override
-  void init({required INetworkClientConfiguration appConfig}) {
-    _dio = Dio(appConfig.configuration);
-
+  DioNetworkClient({
+    required INetworkClientConfiguration appConfig,
+  }) : _dio = Dio(appConfig.configuration) {
     _dio.transformer = BackgroundTransformer();
 
     _dio.interceptors.addAll([
       LoggerInterceptor(),
     ]);
   }
+
+  final Dio _dio;
 
   @override
   Future<Response?> get({

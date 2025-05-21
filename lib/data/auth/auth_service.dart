@@ -4,13 +4,17 @@ import 'package:pika_master/core/logger/logger.dart';
 import 'package:pika_master/domain/auth/iauth_repository.dart';
 import 'package:pika_master/domain/auth/iauth_service.dart';
 import 'package:pika_master/domain/user/iapp_user.dart';
+import 'package:pika_master/domain/user/iuser_repository.dart';
 
 class AuthService implements IAuthService {
   AuthService({
     required IAuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required IUserRepository userRepository,
+  })  : _authRepository = authRepository,
+        _userRepository = userRepository;
 
   final IAuthRepository _authRepository;
+  final IUserRepository _userRepository;
 
   final StreamController<AuthState> _authStateStreamController =
       StreamController.broadcast();
@@ -37,6 +41,8 @@ class AuthService implements IAuthService {
     try {
       _appUser = await _authRepository.loginGoogle();
       if (_appUser == null) return;
+
+      await _userRepository.createUser(user: _appUser!);
 
       _authStateStreamController.add(AuthState.authorized);
     } catch (error) {

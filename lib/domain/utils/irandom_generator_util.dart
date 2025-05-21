@@ -1,3 +1,3 @@
 abstract interface class IRandomGeneratorUtil {
-  Set<int> generateNumbers({int quantity = 5});
+  Set<int> generateNumbers({int quantity = 4});
 }
