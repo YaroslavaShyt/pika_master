@@ -48,7 +48,10 @@ class UserService implements IUserService {
     try {
       final String? userEmail = _authService.appUser?.email;
 
-      if (userEmail == null) return;
+      if (userEmail == null) {
+        _userStateStreamController.add(UserState.notInitialized);
+        return;
+      }
 
       _appUser = await _userRepository.getUser(email: userEmail);
 
@@ -57,6 +60,30 @@ class UserService implements IUserService {
       _userStateStreamController.add(
         UserState.initialized,
       );
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
+  @override
+  Future<void> updateUser({
+    int? xp,
+    int? streak,
+  }) async {
+    try {
+      if (_appUser == null ||
+          (xp == _appUser?.xp && streak == _appUser?.streak)) {
+        return;
+      }
+
+      final IAppUser updatedUser = _appUser!.copyWith(
+        xp: xp,
+        streak: streak,
+      );
+
+      _appUser = updatedUser;
+
+      await _userRepository.updateUser(newUser: updatedUser);
     } catch (error) {
       logger.e(error);
     }

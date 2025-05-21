@@ -18,4 +18,9 @@ abstract interface class IAppUser {
   final int? xp;
 
   Map<String, dynamic> toJson();
+
+  IAppUser copyWith({
+    int? xp,
+    int? streak,
+  });
 }

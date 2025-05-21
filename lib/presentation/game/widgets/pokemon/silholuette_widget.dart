@@ -48,7 +48,7 @@ class _SilhouetteWidgetState extends State<SilhouetteWidget>
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = getColorScheme(context);
-    final double height = MediaQuery.sizeOf(context).height / 3;
+    final double height = MediaQuery.sizeOf(context).height / 4;
 
     return SizedBox(
       height: height,

@@ -8,4 +8,9 @@ abstract interface class IUserService {
   IAppUser? get appUser;
 
   Stream<UserState> userStateStream();
+
+  Future<void> updateUser({
+    int? xp,
+    int? streak,
+  });
 }

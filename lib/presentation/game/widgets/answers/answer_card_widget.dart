@@ -27,21 +27,11 @@ class AnswerCard extends StatefulWidget {
 }
 
 class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
-  late AnimationController _shadowController;
-  late Animation<double> _elevationAnimation;
   late AnimationController _flipController;
 
   @override
   void initState() {
     super.initState();
-
-    _shadowController = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _elevationAnimation =
-        Tween<double>(begin: 4, end: 12).animate(_shadowController);
 
     _flipController = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -55,13 +45,11 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
 
     if (widget.isFlipped && !_flipController.isCompleted) {
       _flipController.forward();
-      _shadowController.stop();
     }
   }
 
   @override
   void dispose() {
-    _shadowController.dispose();
     _flipController.dispose();
     super.dispose();
   }
@@ -69,14 +57,13 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: Listenable.merge([_flipController, _elevationAnimation]),
+      animation: Listenable.merge([_flipController]),
       builder: (context, child) {
         final angle = _flipController.value * pi;
         final isBackVisible = angle > (pi / 2);
 
         return PhysicalModel(
           color: Colors.white,
-          elevation: _elevationAnimation.value,
           shadowColor: Colors.black,
           borderRadius: BorderRadius.circular(12),
           child: GestureDetector(
@@ -152,14 +139,16 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 4,
-          color: widget.isSelected
-              ? widget.isSelectedCorrect
-                  ? Colors.black
-                  : Colors.red
-              : Colors.transparent,
-        ),
+        boxShadow: [
+          BoxShadow(
+            color: widget.isSelected
+                ? widget.isSelectedCorrect
+                    ? Colors.black
+                    : Colors.red
+                : Colors.transparent,
+            offset: Offset(2, -2),
+          ),
+        ],
       ),
       padding: const EdgeInsetsDirectional.all(12),
       child: Center(child: child),

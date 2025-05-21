@@ -6,13 +6,31 @@ class AppUser implements IAppUser {
     required this.name,
     this.profilePhoto,
     this.email,
-    this.streak,
+    this.streak = 0,
     this.achievements = const [],
-    this.xp,
+    this.xp = 0,
   });
 
   @override
+  IAppUser copyWith({
+    int? xp,
+    int? streak,
+  }) {
+    return AppUser(
+      id: id,
+      name: name,
+      email: email,
+      profilePhoto: profilePhoto,
+      streak: streak ?? this.streak,
+      achievements: achievements,
+      xp: xp != null ? xp + this.xp : this.xp,
+    );
+  }
+
+  @override
   Map<String, dynamic> toJson() => {
+        'name': name,
+        'email': email,
         'streak': streak,
         'achievements': achievements,
         'profilePhoto': profilePhoto,
@@ -26,7 +44,7 @@ class AppUser implements IAppUser {
       streak: json['streak'] ?? 0,
       achievements: List<String>.from(json['achievements'] ?? []),
       profilePhoto: json['profilePhoto'],
-      xp: json['xp'],
+      xp: json['xp'] ?? 0,
     );
   }
 
@@ -43,10 +61,10 @@ class AppUser implements IAppUser {
   final String? profilePhoto;
 
   @override
-  final int? streak;
+  final int streak;
 
   @override
-  final int? xp;
+  final int xp;
 
   @override
   final List<String> achievements;

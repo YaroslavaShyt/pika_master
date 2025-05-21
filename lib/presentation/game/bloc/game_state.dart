@@ -28,7 +28,9 @@ class GameState extends Equatable {
       pokemon: pokemon ?? this.pokemon,
       answerOptions: answerOptions ?? this.answerOptions,
       shouldShowImageAnswer: gameFlowStatus != GameFlowStatus.chooseAnswer,
-      selectedAnswer: selectedAnswer ?? this.selectedAnswer,
+      selectedAnswer: gameFlowStatus == GameFlowStatus.chooseAnswer
+          ? null
+          : selectedAnswer ?? this.selectedAnswer,
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pika_master/presentation/main/game/widgets/answers/answer_card_widget.dart';
+import 'package:pika_master/presentation/game/widgets/answers/answer_card_widget.dart';
 
 class AnswerOptionsWidget extends StatelessWidget {
   const AnswerOptionsWidget({
