@@ -28,6 +28,9 @@ class UserService implements IUserService {
   }
 
   @override
+  IAppUser? get appUser => _appUser;
+
+  @override
   Stream<UserState> userStateStream() {
     _authService.authStateStream().listen(
       (AuthState authState) {

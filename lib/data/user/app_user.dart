@@ -8,13 +8,15 @@ class AppUser implements IAppUser {
     this.email,
     this.streak,
     this.achievements = const [],
+    this.xp,
   });
 
   @override
   Map<String, dynamic> toJson() => {
-        'name': name,
         'streak': streak,
         'achievements': achievements,
+        'profilePhoto': profilePhoto,
+        "xp": xp,
       };
 
   factory AppUser.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,8 @@ class AppUser implements IAppUser {
       name: json['name'] ?? '',
       streak: json['streak'] ?? 0,
       achievements: List<String>.from(json['achievements'] ?? []),
+      profilePhoto: json['profilePhoto'],
+      xp: json['xp'],
     );
   }
 
@@ -40,6 +44,9 @@ class AppUser implements IAppUser {
 
   @override
   final int? streak;
+
+  @override
+  final int? xp;
 
   @override
   final List<String> achievements;

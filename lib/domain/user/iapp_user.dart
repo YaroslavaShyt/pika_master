@@ -6,6 +6,7 @@ abstract interface class IAppUser {
     required this.profilePhoto,
     this.streak,
     this.achievements = const [],
+    this.xp,
   });
 
   final String id;
@@ -14,6 +15,7 @@ abstract interface class IAppUser {
   final int? streak;
   final List<String> achievements;
   final String? profilePhoto;
+  final int? xp;
 
   Map<String, dynamic> toJson();
 }

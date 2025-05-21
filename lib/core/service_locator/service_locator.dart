@@ -5,10 +5,12 @@ import 'package:pika_master/core/constants/config_constants.dart';
 import 'package:pika_master/data/auth/auth_repository.dart';
 import 'package:pika_master/data/auth/auth_service.dart';
 import 'package:pika_master/data/game/game_service.dart';
+import 'package:pika_master/data/leader/leader_repository.dart';
 import 'package:pika_master/data/networking/dio/dio_configuration.dart';
 import 'package:pika_master/data/networking/dio/dio_network_client.dart';
 import 'package:pika_master/data/networking/firestore/firestore_network_client.dart';
 import 'package:pika_master/data/pokemon/pokemon_repository.dart';
+import 'package:pika_master/data/statistics/statistics_service.dart';
 import 'package:pika_master/data/user/user_repository.dart';
 import 'package:pika_master/data/user/user_service.dart';
 import 'package:pika_master/data/utils/navigation_util.dart';
@@ -17,8 +19,10 @@ import 'package:pika_master/data/utils/random_generator_util.dart';
 import 'package:pika_master/domain/auth/iauth_repository.dart';
 import 'package:pika_master/domain/auth/iauth_service.dart';
 import 'package:pika_master/domain/game/igame_service.dart';
+import 'package:pika_master/domain/leader/ileader_repository.dart';
 import 'package:pika_master/domain/networking/inetworking_client.dart';
 import 'package:pika_master/domain/pokemon/ipokemon_repository.dart';
+import 'package:pika_master/domain/statistics/istatistics_service.dart';
 import 'package:pika_master/domain/user/iuser_repository.dart';
 import 'package:pika_master/domain/user/iuser_service.dart';
 import 'package:pika_master/domain/utils/ibackground_parser_util.dart';
@@ -69,6 +73,12 @@ class ServiceLocator {
         parseDataUtil: parseDataUtil,
       ),
     );
+
+    sl.registerFactory<ILeaderRepository>(
+      () => LeaderRepository(
+        networkClient: fireStoreNetworkClient,
+      ),
+    );
   }
 
   void _initServices() {
@@ -92,6 +102,12 @@ class ServiceLocator {
       () => GameService(
         randomGeneratorUtil: sl.get<IRandomGeneratorUtil>(),
         pokemonRepository: sl.get<IPokemonRepository>(),
+      ),
+    );
+
+    sl.registerSingleton<IStatisticsService>(
+      StatisticsService(
+        leaderRepository: sl.get<ILeaderRepository>(),
       ),
     );
   }
