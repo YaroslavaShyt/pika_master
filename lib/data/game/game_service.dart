@@ -25,7 +25,7 @@ class GameService implements IGameService {
       final Set<int> generatedIds = _randomGeneratorUtil.generateNumbers(
         quantity: ConfigConstants.maxPokemonQuantity,
       );
-      final int pokemonId = generatedIds.elementAt(Random().nextInt(4) + 1);
+      final int pokemonId = generatedIds.elementAt(Random().nextInt(3));
 
       final List<Object> data = await Future.wait(
         [

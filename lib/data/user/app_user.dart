@@ -7,7 +7,6 @@ class AppUser implements IAppUser {
     this.profilePhoto,
     this.email,
     this.streak = 0,
-    this.achievements = const [],
     this.xp = 0,
   });
 
@@ -15,6 +14,7 @@ class AppUser implements IAppUser {
   IAppUser copyWith({
     int? xp,
     int? streak,
+    DateTime? lastActiveDate,
   }) {
     return AppUser(
       id: id,
@@ -22,7 +22,6 @@ class AppUser implements IAppUser {
       email: email,
       profilePhoto: profilePhoto,
       streak: streak ?? this.streak,
-      achievements: achievements,
       xp: xp != null ? xp + this.xp : this.xp,
     );
   }
@@ -32,7 +31,6 @@ class AppUser implements IAppUser {
         'name': name,
         'email': email,
         'streak': streak,
-        'achievements': achievements,
         'profilePhoto': profilePhoto,
         "xp": xp,
       };
@@ -42,7 +40,6 @@ class AppUser implements IAppUser {
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       streak: json['streak'] ?? 0,
-      achievements: List<String>.from(json['achievements'] ?? []),
       profilePhoto: json['profilePhoto'],
       xp: json['xp'] ?? 0,
     );
@@ -65,7 +62,4 @@ class AppUser implements IAppUser {
 
   @override
   final int xp;
-
-  @override
-  final List<String> achievements;
 }

@@ -5,7 +5,6 @@ abstract interface class IAppUser {
     required this.email,
     required this.profilePhoto,
     this.streak,
-    this.achievements = const [],
     this.xp,
   });
 
@@ -13,7 +12,6 @@ abstract interface class IAppUser {
   final String name;
   final String? email;
   final int? streak;
-  final List<String> achievements;
   final String? profilePhoto;
   final int? xp;
 
