@@ -1,0 +1,16 @@
+{
+  "whoThatPokemon": "Хто цей Покемон?",
+  "googleSignIn": "Вхід з Google",
+  "leaderboard": "Лідери",
+  "streak": {
+    "days_in_a_row": "{} дні підряд!"
+  },
+  "oops": "Халепа(",
+  "youCaughtIt": "Ви спіймали його! \uD83C\uDF89",
+  "oopsItWas": {
+    "pokemonName": "Ой! Це був {} \uD83D\uDE05\""
+  },
+  "back": "Назад",
+  "startAgain": "Грати ще",
+  "startRound": " Почати раунд"
+}

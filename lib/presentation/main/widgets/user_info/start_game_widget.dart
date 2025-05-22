@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class StartGameWidget extends StatelessWidget {
@@ -17,6 +18,7 @@ class StartGameWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
+          flex: 2,
           child: Container(
             padding: const EdgeInsetsDirectional.all(20),
             decoration: BoxDecoration(
@@ -57,7 +59,7 @@ class StartGameWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Start Round",
+                  context.tr("startRound"),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

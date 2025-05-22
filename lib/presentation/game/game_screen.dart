@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pika_master/presentation/game/bloc/game_cubit.dart';
@@ -25,7 +26,7 @@ class GameScreen extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             }
             if (state.status == GameStatus.failure) {
-              return Center(child: Text("Oops"));
+              return Center(child: Text(context.tr("oops")));
             }
 
             return Column(
@@ -37,7 +38,7 @@ class GameScreen extends StatelessWidget {
                     if (state.gameFlowStatus == GameFlowStatus.chooseAnswer)
                       Padding(
                         padding: const EdgeInsetsDirectional.only(top: 30),
-                        child: MediumText(text: "Who's this Pokemon?"),
+                        child: MediumText(text: context.tr("whoThatPokemon")),
                       ),
                     if (state.pokemon != null) ...[
                       SilhouetteWidget(
@@ -46,15 +47,19 @@ class GameScreen extends StatelessWidget {
                       ),
                       if (state.gameFlowStatus ==
                           GameFlowStatus.correctAnswer) ...[
-                        MediumText(text: "You caught it! 🎉"),
+                        MediumText(text: context.tr("youCaughtIt")),
                       ],
                       if (state.gameFlowStatus ==
                           GameFlowStatus.incorrectAnswer) ...[
                         MediumText(
-                          text: "Oops! It was ${state.pokemon!.name} 😅",
+                          text: context.tr(
+                            "oopsItWas.pokemonName",
+                            args: [
+                              state.pokemon!.name,
+                            ],
+                          ),
                         ),
                       ],
-                      Text(state.pokemon!.name),
                     ],
                     AnswerOptionsWidget(
                       answerOptions: state.answerOptions,
@@ -77,7 +82,7 @@ class GameScreen extends StatelessWidget {
                       MainOutlinedButton(
                         onPressed: cubit.onBackTap,
                         child: Text(
-                          "Back",
+                          context.tr("back"),
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -85,7 +90,7 @@ class GameScreen extends StatelessWidget {
                         MainOutlinedButton(
                           onPressed: cubit.onStartAgainTap,
                           child: Text(
-                            "Start again",
+                            context.tr("startAgain"),
                             style: TextStyle(color: Colors.black),
                           ),
                         )

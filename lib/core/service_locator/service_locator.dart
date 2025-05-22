@@ -13,6 +13,7 @@ import 'package:pika_master/data/pokemon/pokemon_repository.dart';
 import 'package:pika_master/data/statistics/statistics_service.dart';
 import 'package:pika_master/data/user/user_repository.dart';
 import 'package:pika_master/data/user/user_service.dart';
+import 'package:pika_master/data/utils/localization_util.dart';
 import 'package:pika_master/data/utils/navigation_util.dart';
 import 'package:pika_master/data/utils/parse_data_util.dart';
 import 'package:pika_master/data/utils/random_generator_util.dart';
@@ -26,6 +27,7 @@ import 'package:pika_master/domain/statistics/istatistics_service.dart';
 import 'package:pika_master/domain/user/iuser_repository.dart';
 import 'package:pika_master/domain/user/iuser_service.dart';
 import 'package:pika_master/domain/utils/ibackground_parser_util.dart';
+import 'package:pika_master/domain/utils/ilocalization_util.dart';
 import 'package:pika_master/domain/utils/inavigation_util.dart';
 import 'package:pika_master/domain/utils/irandom_generator_util.dart';
 
@@ -119,6 +121,7 @@ class ServiceLocator {
         max: ConfigConstants.maxPokemonId,
       ),
     );
+    sl.registerFactory<ILocalizationUtil>(() => LocalizationUtil());
   }
 
   void _initStorage() {}

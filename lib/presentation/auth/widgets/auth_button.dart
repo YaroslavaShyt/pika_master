@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pika_master/core/theme/app_color_theme.dart';
@@ -38,7 +39,7 @@ class AuthButton extends StatelessWidget {
             ),
           ],
           Text(
-            "Sign in with Google",
+            context.tr('googleSignIn'),
             style: TextStyle(
               color: colorScheme.onSurface,
               fontSize: 20,

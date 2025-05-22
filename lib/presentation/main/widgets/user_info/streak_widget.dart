@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,7 +22,10 @@ class StreakWidget extends StatelessWidget {
           color: Colors.deepOrangeAccent,
         ),
         Text(
-          "$value day(s) in a row!",
+          context.tr(
+            "streak.days_in_a_row",
+            args: [value.toString()],
+          ),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,

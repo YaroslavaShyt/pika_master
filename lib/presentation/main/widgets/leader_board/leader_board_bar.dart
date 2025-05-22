@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,7 +24,7 @@ class LeaderBoardBar extends StatelessWidget {
               color: Colors.deepOrangeAccent,
             ),
             Text(
-              'Leaderboard',
+              context.tr("leaderboard"),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,

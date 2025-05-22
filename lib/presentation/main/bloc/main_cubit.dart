@@ -6,26 +6,30 @@ import 'package:pika_master/domain/leader/ileader.dart';
 import 'package:pika_master/domain/statistics/istatistics_service.dart';
 import 'package:pika_master/domain/user/iapp_user.dart';
 import 'package:pika_master/domain/user/iuser_service.dart';
+import 'package:pika_master/domain/utils/ilocalization_util.dart';
 import 'package:pika_master/domain/utils/inavigation_util.dart';
 import 'package:pika_master/presentation/game/game_factory.dart';
 import 'package:pika_master/presentation/main/bloc/main_state.dart';
 
 class MainCubit extends Cubit<MainState> {
-  MainCubit({
-    required IAuthService authService,
-    required INavigationUtil navigationUtil,
-    required IUserService userService,
-    required IStatisticsService statisticsService,
-  })  : _authService = authService,
+  MainCubit(
+      {required IAuthService authService,
+      required INavigationUtil navigationUtil,
+      required IUserService userService,
+      required IStatisticsService statisticsService,
+      required ILocalizationUtil localizationUtil})
+      : _authService = authService,
         _navigationUtil = navigationUtil,
         _userService = userService,
         _statisticsService = statisticsService,
+        _localizationUtil = localizationUtil,
         super(const MainState());
 
   final IAuthService _authService;
   final INavigationUtil _navigationUtil;
   final IUserService _userService;
   final IStatisticsService _statisticsService;
+  final ILocalizationUtil _localizationUtil;
 
   Future<void> init() async {
     try {
@@ -72,4 +76,6 @@ class MainCubit extends Cubit<MainState> {
       data: GameRoutingArgs(onGameFinished: init),
     );
   }
+
+  Function get onLocalizationTap => _localizationUtil.setLocale;
 }

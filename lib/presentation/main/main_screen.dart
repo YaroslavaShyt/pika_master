@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:pika_master/presentation/main/bloc/main_state.dart';
 import 'package:pika_master/presentation/main/widgets/leader_board/leader_board_widget.dart';
 import 'package:pika_master/presentation/main/widgets/user_info/start_game_widget.dart';
 import 'package:pika_master/presentation/main/widgets/user_info/user_info_widget.dart';
+import 'package:pika_master/presentation/widgets/buttons/main_outlined_button.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({
@@ -45,6 +47,7 @@ class MainScreen extends StatelessWidget {
                 end: 16,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 16,
                 children: [
                   UserInfoWidget(
@@ -61,12 +64,27 @@ class MainScreen extends StatelessWidget {
                       leaders: state.leaders,
                     ),
                   ),
+                  MainOutlinedButton(
+                    onPressed: () => _changeLocale(context),
+                    child: Text(
+                      context.locale.languageCode,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  )
                 ],
               ),
             );
           },
         ),
       ),
+    );
+  }
+
+  void _changeLocale(BuildContext context) {
+    final String locale = context.locale.languageCode;
+    cubit.onLocalizationTap(
+      context,
+      langCode: locale == "uk" ? "en" : "uk",
     );
   }
 }

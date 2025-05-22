@@ -1,0 +1,16 @@
+{
+  "whoThatPokemon": "Who's that Pokemon?",
+  "googleSignIn": "Sign in with Google",
+  "leaderboard": "Leaderboard",
+  "streak": {
+    "days_in_a_row": "{} day(s) in a row!"
+  },
+  "oops": "Oops",
+  "youCaughtIt": "You caught it! \uD83C\uDF89",
+  "oopsItWas": {
+    "pokemonName": "Oops! It was {} \uD83D\uDE05\""
+  },
+  "back": "Back",
+  "startAgain": "Start again",
+  "startRound": "Start Round"
+}
