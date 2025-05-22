@@ -55,30 +55,55 @@ class UserService implements IUserService {
 
       _appUser = await _userRepository.getUser(email: userEmail);
 
-      if (_appUser == null) return;
+      if (_appUser == null) {
+        _authService.logout();
+        _userStateStreamController.add(UserState.notInitialized);
+        return;
+      }
 
-      _userStateStreamController.add(
-        UserState.initialized,
-      );
+      _userStateStreamController.add(UserState.initialized);
+      final DateTime lastActiveAt = _appUser?.lastActiveAt ?? DateTime.now();
+
+      final bool isLostStreak = _isLostStreak(lastActiveAt);
+      if (isLostStreak) updateUser();
     } catch (error) {
       logger.e(error);
+      if (_appUser == null) {
+        _authService.logout();
+        _userStateStreamController.add(UserState.notInitialized);
+        return;
+      }
     }
   }
 
   @override
-  Future<void> updateUser({
-    int? xp,
-    int? streak,
-  }) async {
+  Future<void> updateUser({int? xp}) async {
     try {
-      if (_appUser == null ||
-          (xp == _appUser?.xp && streak == _appUser?.streak)) {
-        return;
+      if (_appUser == null) return;
+
+      int userStreak = _appUser!.streak ?? 0;
+      final DateTime? lastActiveAt = _appUser!.lastActiveAt;
+      final DateTime now = DateTime.now();
+
+      bool isLostStreak = false;
+
+      if (lastActiveAt != null) {
+        final int diffDays = now.difference(lastActiveAt).inDays;
+        isLostStreak = diffDays > 1;
+
+        if (diffDays == 1) {
+          userStreak++;
+        } else if (isLostStreak) {
+          userStreak = 1;
+        }
+      } else {
+        userStreak = 1;
       }
 
       final IAppUser updatedUser = _appUser!.copyWith(
         xp: xp,
-        streak: streak,
+        streak: userStreak,
+        lastActiveAt: now,
       );
 
       _appUser = updatedUser;
@@ -87,5 +112,12 @@ class UserService implements IUserService {
     } catch (error) {
       logger.e(error);
     }
+  }
+
+  bool _isLostStreak(DateTime? lastActiveAt) {
+    if (lastActiveAt == null) return false;
+    final now = DateTime.now();
+    final differenceInDays = now.difference(lastActiveAt).inDays;
+    return differenceInDays > 1;
   }
 }

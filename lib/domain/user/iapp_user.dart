@@ -6,6 +6,7 @@ abstract interface class IAppUser {
     required this.profilePhoto,
     this.streak,
     this.xp,
+    this.lastActiveAt,
   });
 
   final String id;
@@ -14,11 +15,13 @@ abstract interface class IAppUser {
   final int? streak;
   final String? profilePhoto;
   final int? xp;
+  final DateTime? lastActiveAt;
 
   Map<String, dynamic> toJson();
 
   IAppUser copyWith({
     int? xp,
     int? streak,
+    DateTime? lastActiveAt,
   });
 }

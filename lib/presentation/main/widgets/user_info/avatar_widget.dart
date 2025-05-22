@@ -11,6 +11,8 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 70,
+      width: 70,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -25,7 +27,21 @@ class AvatarWidget extends StatelessWidget {
             if (avatarPath == null || (avatarPath?.isEmpty ?? true))
               Icon(Icons.person)
             else
-              Image.network(avatarPath!),
+              Image.network(
+                avatarPath!,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+
+                  final expected = loadingProgress.expectedTotalBytes;
+                  final loaded = loadingProgress.cumulativeBytesLoaded;
+
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: expected != null ? loaded / expected : null,
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),

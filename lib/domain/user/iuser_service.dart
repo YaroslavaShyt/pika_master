@@ -9,8 +9,5 @@ abstract interface class IUserService {
 
   Stream<UserState> userStateStream();
 
-  Future<void> updateUser({
-    int? xp,
-    int? streak,
-  });
+  Future<void> updateUser({int? xp});
 }
