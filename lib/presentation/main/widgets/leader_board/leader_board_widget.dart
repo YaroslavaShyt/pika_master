@@ -18,7 +18,8 @@ class LeaderBoardWidget extends StatelessWidget {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              final user = leaders[index];
+              final Map<String, dynamic> user = leaders[index];
+
               return Container(
                 margin: const EdgeInsetsDirectional.symmetric(
                   horizontal: 8,

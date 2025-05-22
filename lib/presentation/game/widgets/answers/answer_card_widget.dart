@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:pika_master/presentation/game/widgets/answers/card_container_widget.dart';
 
 class AnswerCard extends StatefulWidget {
   const AnswerCard({
@@ -57,10 +58,10 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: Listenable.merge([_flipController]),
+      animation: _flipController,
       builder: (context, child) {
-        final angle = _flipController.value * pi;
-        final isBackVisible = angle > (pi / 2);
+        final double angle = _flipController.value * pi;
+        final bool isBackVisible = angle > (pi / 2);
 
         return PhysicalModel(
           color: Colors.white,
@@ -106,6 +107,7 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
       transform: Matrix4.rotationY(pi),
       child: _cardContainer(
         child: Column(
+          spacing: 8,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
@@ -117,7 +119,6 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
             Text(
               widget.answerText,
               textAlign: TextAlign.center,
@@ -129,29 +130,17 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
     );
   }
 
-  Widget _cardContainer({
-    required Widget child,
-    Color color = Colors.white,
-  }) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: widget.isSelected
-                ? widget.isSelectedCorrect
-                    ? Colors.black
-                    : Colors.red
-                : Colors.transparent,
-            offset: Offset(2, -2),
-          ),
-        ],
-      ),
-      padding: const EdgeInsetsDirectional.all(12),
-      child: Center(child: child),
+  Widget _cardContainer({required Widget child}) {
+    final Color color = widget.isSelected
+        ? widget.isSelectedCorrect
+            ? Colors.black
+            : Colors.red
+        : Colors.transparent;
+
+    return CardContainerWidget(
+      shadowColor: color,
+      color: color,
+      child: child,
     );
   }
 }

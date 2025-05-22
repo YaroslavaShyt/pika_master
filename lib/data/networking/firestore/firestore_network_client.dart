@@ -19,39 +19,32 @@ class FireStoreNetworkClient implements INetworkClient {
 
     Query query = collection;
 
-    queryParameters?.forEach((key, value) {
-      if (value is Map<String, dynamic>) {
-        value.forEach((operator, operatorValue) {
-          switch (operator) {
-            case 'isEqualTo':
-              query = query.where(key, isEqualTo: operatorValue);
-              break;
-            case 'isGreaterThan':
-              query = query.where(key, isGreaterThan: operatorValue);
-              break;
-            case 'isLessThan':
-              query = query.where(key, isLessThan: operatorValue);
-              break;
-            case 'isGreaterThanOrEqualTo':
-              query = query.where(key, isGreaterThanOrEqualTo: operatorValue);
-              break;
-            case 'isLessThanOrEqualTo':
-              query = query.where(key, isLessThanOrEqualTo: operatorValue);
-              break;
-            case 'arrayContains':
-              query = query.where(key, arrayContains: operatorValue);
-              break;
-            case 'in':
-              query = query.where(key, whereIn: operatorValue);
-              break;
-            default:
-              throw ArgumentError('Unsupported operator: $operator');
-          }
-        });
-      } else {
-        query = query.where(key, isEqualTo: value);
-      }
-    });
+    queryParameters?.forEach(
+      (key, value) {
+        if (value is Map<String, dynamic>) {
+          value.forEach(
+            (operator, operatorValue) {
+              query = switch (operator) {
+                'isEqualTo' => query.where(key, isEqualTo: operatorValue),
+                'isGreaterThan' =>
+                  query.where(key, isGreaterThan: operatorValue),
+                'isLessThan' => query.where(key, isLessThan: operatorValue),
+                'isGreaterThanOrEqualTo' =>
+                  query.where(key, isGreaterThanOrEqualTo: operatorValue),
+                'isLessThanOrEqualTo' =>
+                  query.where(key, isLessThanOrEqualTo: operatorValue),
+                'arrayContains' =>
+                  query.where(key, arrayContains: operatorValue),
+                'in' => query.where(key, whereIn: operatorValue),
+                _ => throw ArgumentError('Unsupported operator: $operator'),
+              };
+            },
+          );
+        } else {
+          query = query.where(key, isEqualTo: value);
+        }
+      },
+    );
 
     QuerySnapshot snapshot = await query.get();
     return snapshot.docs.map(
@@ -73,8 +66,9 @@ class FireStoreNetworkClient implements INetworkClient {
     dynamic additionalParam,
   }) async {
     CollectionReference collection = _fireStore.collection(endpoint);
-    DocumentReference docRef =
-        await collection.add(data as Map<String, dynamic>);
+    DocumentReference docRef = await collection.add(
+      data as Map<String, dynamic>,
+    );
     return {'id': docRef.id};
   }
 
@@ -89,8 +83,9 @@ class FireStoreNetworkClient implements INetworkClient {
       throw ArgumentError(
           'Document ID must be provided in additionalParam for PUT.');
     }
-    DocumentReference docRef =
-        _fireStore.collection(endpoint).doc(additionalParam);
+    DocumentReference docRef = _fireStore.collection(endpoint).doc(
+          additionalParam,
+        );
     await docRef.set(data as Map<String, dynamic>);
     return {'id': docRef.id};
   }
@@ -121,8 +116,9 @@ class FireStoreNetworkClient implements INetworkClient {
       throw ArgumentError(
           'Document ID must be provided in additionalParam for PATCH.');
     }
-    DocumentReference docRef =
-        _fireStore.collection(endpoint).doc(additionalParam);
+    DocumentReference docRef = _fireStore.collection(endpoint).doc(
+          additionalParam,
+        );
     await docRef.update(data as Map<String, dynamic>);
     return {'updated': true};
   }

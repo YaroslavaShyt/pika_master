@@ -31,7 +31,10 @@ class AnswerOptionsWidget extends StatelessWidget {
         ),
         itemCount: answerOptions.length,
         itemBuilder: (context, index) {
-          final entry = answerOptions.entries.elementAt(index);
+          final MapEntry<String, String> entry =
+              answerOptions.entries.elementAt(
+            index,
+          );
           final bool isSelected = selectedAnswer == entry.key;
           final bool isFlipped = selectedAnswer != null;
 

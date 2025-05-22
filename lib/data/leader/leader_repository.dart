@@ -20,11 +20,7 @@ class LeaderRepository implements ILeaderRepository {
         },
       );
 
-      return data
-          .map<ILeader>(
-            (e) => Leader.fromJson(e),
-          )
-          .toList();
+      return data.map<ILeader>((e) => Leader.fromJson(e)).toList();
     } catch (e) {
       throw Exception("Failed to fetch leaders data: $e");
     }

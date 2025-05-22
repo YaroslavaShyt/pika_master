@@ -32,8 +32,8 @@ class AvatarWidget extends StatelessWidget {
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
 
-                  final expected = loadingProgress.expectedTotalBytes;
-                  final loaded = loadingProgress.cumulativeBytesLoaded;
+                  final int? expected = loadingProgress.expectedTotalBytes;
+                  final int loaded = loadingProgress.cumulativeBytesLoaded;
 
                   return Center(
                     child: CircularProgressIndicator(

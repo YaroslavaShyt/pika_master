@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pika_master/presentation/auth/bloc/auth_cubit.dart';
 import 'package:pika_master/presentation/auth/bloc/auth_state.dart';
 import 'package:pika_master/presentation/auth/widgets/auth_button.dart';
-import 'package:pika_master/presentation/auth/widgets/poke_ball_animation_widget.dart';
+import 'package:pika_master/presentation/auth/widgets/pikachu_animation_widget.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({
