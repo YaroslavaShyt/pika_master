@@ -139,7 +139,7 @@ class _AnswerCardState extends State<AnswerCard> with TickerProviderStateMixin {
 
     return CardContainerWidget(
       shadowColor: color,
-      color: color,
+      color: Colors.white,
       child: child,
     );
   }

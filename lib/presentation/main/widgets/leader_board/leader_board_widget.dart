@@ -54,7 +54,12 @@ class LeaderBoardWidget extends StatelessWidget {
                           FontAwesomeIcons.star,
                           color: Colors.black,
                         ),
-                      Text(user["name"]),
+                      Flexible(
+                        child: Text(
+                          user["name"],
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ],
                   ),
                   trailing: Text(

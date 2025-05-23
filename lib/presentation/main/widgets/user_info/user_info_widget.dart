@@ -39,12 +39,15 @@ class UserInfoWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    userName,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width / 1.6,
+                    child: Text(
+                      userName,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   StreakWidget(value: streak),

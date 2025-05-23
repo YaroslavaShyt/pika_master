@@ -81,10 +81,12 @@ class MainScreen extends StatelessWidget {
   }
 
   void _changeLocale(BuildContext context) {
-    final String locale = context.locale.languageCode;
-    cubit.onLocalizationTap(
-      context,
-      langCode: locale == "uk" ? "en" : "uk",
-    );
+    final String currentLang = context.locale.languageCode;
+    final Locale newLocale = currentLang == 'uk'
+        ? const Locale('en', 'GB')
+        : const Locale('uk', 'UA');
+
+    context.setLocale(newLocale);
+    cubit.onLocalizationTap(context, langCode: newLocale.languageCode);
   }
 }
